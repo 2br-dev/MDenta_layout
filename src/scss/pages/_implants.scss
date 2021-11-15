@@ -1,0 +1,78 @@
+main#implants{
+
+    & .lazy{
+
+        opacity: 1;
+        padding-bottom: 75%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        &.logo{
+            background-size: 75% auto;
+        }
+
+        &.logo-small{
+            background-size: contain;
+        }
+    }
+
+    & .swiper-slide{
+
+        & .slide-content{
+
+            margin: 20px;
+
+            @media(max-width: $medium){
+                margin: 0 2px;
+            }
+        }
+    }
+
+    & .mis-logo{
+
+        @media(max-width: $medium){
+            order: -1;
+        }
+    }
+
+    & .col{
+        margin-bottom: 20px;
+
+        @media(max-width: $medium){
+            margin-bottom: 0;
+        }
+    }
+
+    & .swiper-container{
+
+        &:before, &:after{
+            display: none;
+        }
+    }
+
+    & .one-step-implant, & .pecularities{
+
+        &:before{
+            content: '';
+            display: block;
+            margin-bottom: 60px;
+            height: 15px;
+            background: url(/img/slider-frame.svg) center left no-repeat;
+    
+            @media(max-width: $medium){
+                width: 40%;
+                background-position: center center;
+            }
+        }
+
+        &:after{
+            @extend :before;
+            transform: scaleX( -1 );
+            margin-bottom: 0;
+            margin-top: 60px;
+            margin-bottom: 4px;
+            margin-left: 60%;
+        }
+    }
+}

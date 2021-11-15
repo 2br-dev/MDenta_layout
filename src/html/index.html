@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @@include('./parts/head.html', {title: 'Главная'})
+</head>
+<body>
+    @@include('./parts/header.html')
+    @@include('./parts/splash.html')
+    <main id="main">
+        <section class="three">
+            <div class="three-container"></div>
+        </section>
+        <section class="hero">
+            <div class="container center-align">
+                <p class="slogan">передовые технологии лечения зубов. </p>
+            </div>
+        </section>
+        <section id="info">
+            <div class="container">
+                <div class="row">
+                    <div class="col s1 hide-s-down">
+                        <span class="section-id align-right">
+                            section 01: dental laboratory
+                        </span>
+                    </div>
+                    <div class="col s11">
+                        <div class="row">
+                            <div class="col s12 center-align">
+                                <h2>M-Denta – это</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col center-align l4 m6 s12">
+                                <div class="lazy main-points" data-src="/img/icons/innovations.svg"></div>
+                                <h3>Инновации</h3>
+                                <p>В своей работке наша компания использует инновационные методики и технологии,направленные на результат</p>
+                            </div>
+                            <div class="col center-align l4 m6 s12 border l r dotted">
+                                <div class="lazy main-points" data-src="/img/icons/experience.svg"></div>
+                                <h3>Опыт</h3>
+                                <p>Наши специалисты – опытные профессионалы, за плечами которых многолетняя работа со случаями разной степени сложности</p>
+                            </div>
+                            <div class="col center-align l4 m6 s12 offset-m3">
+                                <div class="lazy main-points" data-src="/img/icons/guarantie.svg"></div>
+                                <h3>Гарантии</h3>
+                                <p>M-Denta работает только с самыми высококачественными материалами мировых производителей зуботехнической индустрии</p>
+                            </div>
+                        </div>
+                        <div class="swiper-container" id="main-photos">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="lazy materialboxed" data-src="/img/main-slider/1.jpg"></div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="lazy materialboxed" data-src="/img/main-slider/2.jpg"></div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="lazy materialboxed" data-src="/img/main-slider/3.jpg"></div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="lazy materialboxed" data-src="/img/main-slider/4.jpg"></div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="lazy materialboxed" data-src="/img/main-slider/5.jpg"></div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="lazy materialboxed" data-src="/img/main-slider/6.jpg"></div>
+                                </div>
+                            </div>
+                            <a href="" class="prev"><i class="mdi mdi-chevron-left"></i></a>
+                            <a href="" class="next"><i class="mdi mdi-chevron-right"></i></a>
+                            <div class="pagination-wrapper"></div>
+                        </div>
+                        <div class="service-wrapper">
+                            <div class="canvas-wrapper">
+                                
+                            </div>
+                            <div class="content-wrapper">
+                                @@loop('./parts/service-entry.html', './data/services.json')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @@include('./parts/call-to-action.html')
+    </main>
+    @@include('./parts/scripts.html')
+    @@include('./parts/footer.html')
+</body>
+</html>

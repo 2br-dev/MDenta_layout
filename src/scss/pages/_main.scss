@@ -1,0 +1,82 @@
+#main{
+
+    & .hero{
+
+        align-items: flex-end;
+        height: 80vh;
+        
+        & .slogan{
+            display: block;
+            text-align: center;
+            font-size: 21px;
+        }
+    }
+
+    & .three-container{
+        width: 100%;
+        height: 100%;
+    }
+
+    & .main-points{
+        height: 100px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        margin: 6vmin 0;
+    }
+
+    & .service-wrapper{
+
+        display: grid;
+        grid-gap: 1.5rem;
+        grid-template-columns: 42% 58%;
+
+        @media(max-width: $extra-large){
+            grid-template-columns: 50% 50%;
+        }
+
+        @media(max-width: $small){
+            grid-template-columns: 100%;
+        }
+
+        & .canvas-wrapper{
+            top: 160px;
+            height: 60vmin;
+            position: relative;
+            position: sticky;
+
+            &:before{
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                content: '';
+                width: 100%;
+                height: 100%;
+                border: 1px solid red;
+                border-image-source: url(/img/border-9-slice.svg);
+                border-image-repeat: round;
+                border-image-width: 40px;
+                border-image-slice: 40%;
+                pointer-events: none;
+            }
+
+            @media(max-width: $small){
+                height: 80vh;
+                top: 90px;
+            }
+        }
+    
+        & .service-entry{
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+
+            @media(max-width: $medium){
+                margin: 160px 0;
+            }
+        }
+    }
+}

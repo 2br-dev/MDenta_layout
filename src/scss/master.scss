@@ -1,0 +1,23 @@
+//======= Fonts =====================================================================
+@import './parts/fonts';
+
+//======= Framework =================================================================
+@import './framework/materialize';
+@import './framework/materialdesignicons';
+@import './framework/swiper_bundle';
+
+//======= Parts =====================================================================
+@import './parts/vars';
+@import './parts/header';
+@import './parts/typography';
+@import './parts/custom_grid';
+@import './parts/helpers';
+@import './parts/footer';
+
+
+//======= Pages =====================================================================
+@import './pages/lab';
+@import './pages/main';
+@import './pages/healing';
+@import './pages/prosthesis';
+@import './pages/implants';

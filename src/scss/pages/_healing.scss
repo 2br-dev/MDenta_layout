@@ -1,0 +1,127 @@
+main#healing{
+
+    & .healing-block{
+    
+        border: 1px solid #1BBFEE;
+        display: flex;
+        border-top-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        margin-bottom: 20px;
+        
+        & .icon{
+    
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            & .lazy{
+    
+                width: 120px;
+                height: 120px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        }
+        
+        & .info{
+            
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            
+            & > *{
+    
+                display: block;
+                width: 100%;
+                
+                & h3{
+                    margin-top: 0;
+                }
+            }
+        }
+
+        @media(max-width: $medium){
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+
+            & .icon{
+                width: 100%;
+            }
+        }
+    }
+
+    & .disease{
+    
+        margin-bottom: 20px;
+        
+        & .lazy{
+                    
+            position: relative;
+            background-position: center;
+            background-size: cover;
+            padding-bottom: 60%;
+            margin-right: 60px;
+
+            @media(max-width: $medium){
+                margin-right: 0;
+                padding-bottom: 75%;
+            }
+    
+            & h3{
+                position: absolute;
+                bottom: 0;
+                margin: 0;
+                padding: 20px;
+                width: 100%;
+            }
+        }
+        
+    }
+    
+    & .parallax{
+        
+        height: 24vmax;
+        min-height: 480px;
+        background-size: cover;
+        border-radius: 0;
+
+        & .container{
+            height: 100%;
+        }
+    
+        & .row{
+            
+            margin: 0;
+            height: 100%;
+            
+            & .parallax-info{
+                height: 100%;
+                display: flex;
+                align-items: center;
+                background: rgba(white, .8);
+                color: #333;
+                backdrop-filter: blur(3px);
+                
+            }
+        }
+    }
+    
+    & .plumb{
+    
+        & .lazy{
+            
+            padding-bottom: 45%;
+            margin-right: 60px;
+            background-size: cover;
+
+            @media(max-width: $medium){
+                margin-right: 0;
+                padding-bottom: 50%;
+            }
+        }
+    }
+}

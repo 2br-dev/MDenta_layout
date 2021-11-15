@@ -1,0 +1,96 @@
+body{
+    font-family: 'Exo 2';
+    font-weight: 200;
+    color: $text;
+    font-size: 16px;
+
+    h1, h2, h3, h4{
+        font-family: 'Prosto One';
+    }
+
+    h1{
+        text-transform: uppercase;
+        font-size: 46px;
+
+        @media(max-width: $small){
+            font-size: 24px;
+        }
+    }
+
+    & h2{
+        font-size: 32px;
+        color: $secondary;
+
+        @media(max-width: $small){
+            font-size: 20px;
+        }
+    }
+
+    & h3{
+        font-size: 26px;
+
+        @media(max-width: $small){
+            font-size: 18px;
+        }
+    }
+
+    & h4{
+        font-size: 18px;
+
+        @media(max-width: $small){
+            font-size: 16px;
+        }
+    }
+
+    & a{
+        text-decoration: none;
+        color: $secondary;
+
+        &.btn{
+            color: $primary;
+            background: $secondary;
+            line-height: 40px;
+            display: inline-block;
+            border-radius: 20px;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+
+            &.outlined{
+
+                background: transparent;
+                box-shadow: 0 0 0 1px $secondary inset;
+                color: $secondary;
+
+                &:hover{
+                    background: rgba($secondary, .2);
+                }
+            }
+            
+            &:before{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(#fff, .4);
+                mix-blend-mode: overlay;
+                transform: scale(0);
+                opacity: 0;
+                border-radius: 20px;
+                transition: opacity .4s, transform .4s;
+            }
+
+            &:hover:before{
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    }
+
+    & p, & li{
+        line-height: 1.4rem;
+    }
+}

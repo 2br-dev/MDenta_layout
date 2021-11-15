@@ -1,0 +1,120 @@
+header{
+    
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: linear-gradient(to bottom, #fff 40%, #F3F3F3);
+    box-shadow: 0 1px 3px rgba(black, .2);
+    z-index: 20;
+    padding: 0 10px;
+    
+    & nav{
+        
+        display: flex;
+        
+        & .logo{
+            width: 130px;
+            background: url(/img/logo.svg) center center no-repeat;
+            background-size: auto 50%;
+        }
+        
+        & .separator{
+            flex-grow: 1;
+        }
+        
+        & > ul{
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            
+            & > li{
+
+                position: relative;
+                
+                & a{
+                    display: inline-block;
+                    line-height: 54px;
+                    padding: 0 10px;
+                    color: $primary;
+                    transition: background .2s;
+                    
+                    &:hover{
+                        background: linear-gradient(darken(#fff, 2), darken(#fff, 20));
+                    }
+                }
+
+                &:last-of-type{
+
+                    & a{
+                        font-size: 26px;
+                    }
+                }
+
+                & ul{
+
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    transition: opacity .2s, transform .2s;
+
+                    transform: translateY(-20px);
+                    opacity: 0;
+                    pointer-events: none;
+
+                    & li{
+
+                        background: #fff;
+
+                        & a{
+                            border-top: 1px solid #efefef;
+                            display: block;
+                            transition: background-color .2s;
+
+                            &:hover{
+                                background: #efefef;
+                            }
+                        }
+                    }
+                }
+
+                &:hover ul{
+                    pointer-events: all;
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+        }
+    }
+
+}
+
+.sidenav{
+
+    & .user-view{
+
+        height: 120px;
+        background: url(/img/logo-dark.svg) center center no-repeat, linear-gradient($primary, darken($primary, 10));
+    }
+
+    & li{
+
+        &.folder{
+
+            position: relative;
+
+            &:after{
+                content: '\F0140';
+                font-family: 'Material Design Icons';
+                position: absolute;
+                color: #333;
+                top: 0px;
+                right: 20px;
+            }
+
+            & ul{
+                background: #efefef;
+            }
+        }
+    }
+}

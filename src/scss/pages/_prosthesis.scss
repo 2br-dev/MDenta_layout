@@ -1,0 +1,38 @@
+main#prosthesis{
+
+    & .lazy{
+            
+        margin-right: 60px;
+        padding-bottom: 60%;
+        background-size: cover;
+        background-position: center;
+
+        @media(max-width: $medium){
+            margin-right: 0;
+            padding-bottom: 75%;
+        }
+    }
+
+    & #nylon{
+        padding: 2vw 0;
+        margin: 2vw 0;
+        background: $primary;
+    }
+
+    & #non-removable{
+
+        & .col{
+            margin-bottom: 20px;
+        }
+
+        & .crown{
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    & .note{
+        border-top: 1px solid #fff;
+        padding-top: 20px;
+    }
+}

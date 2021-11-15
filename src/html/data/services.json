@@ -1,0 +1,26 @@
+[
+    {
+        "id": "s-implants",
+        "num": "01",
+        "title": "Имплантация",
+        "body": "./service-implants.html"
+    },
+    {
+        "id": "s-healing",
+        "num": "02",
+        "title": "Лечение",
+        "body": "./service-healing.html"
+    },
+    {
+        "id": "s-prosthesis",
+        "num": "03",
+        "title": "Протезирование",
+        "body": "./service-prosthesis.html"
+    },
+    {
+        "id": "s-lab",
+        "num": "04",
+        "title": "Зуботехническая лаборатория",
+        "body": "./service-lab.html"
+    }
+]

@@ -1,0 +1,25 @@
+{
+  "name": "mdenta-layout",
+  "description": "MDenta website layout",
+  "version": "1.0.0",
+  "main": "/release/index.html",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "start": "gulp watch"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-file-include": "^2.3.0",
+    "gulp-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
+    "gulp-autoprefixer": "^8.0.0",
+    "browser-sync": "^2.27.5"
+  },
+  "devDependencies": {
+    "commonjs": "^0.0.1",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "systemjs": "^6.10.3",
+    "typescript": "^4.4.4"
+  }
+}
