@@ -1,0 +1,70 @@
+.zoom-container{
+
+    position: relative;
+    position: fixed;
+    z-index: 5000;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(black, .8);
+    background-size: 0 0;
+    transition: opacity .4s;
+    opacity: 0;
+    pointer-events: none;
+    padding: 8vw;
+
+    & .zoomable-image{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        transform: scale(0);
+        transition: transform .4s, background-image .4s;
+    }
+    
+    &.open{
+        opacity: 1;
+        pointer-events: all;
+        
+        & .zoomable-image{
+            transform: scale(1);
+        }
+    }
+
+    & .zoomable-prev{
+        font-size: 64px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100px;
+        text-align: center;
+        transform: translateY(-50%);
+        color: rgba(#fff, .5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    & .zoomable-next{
+
+        @extend .zoomable-prev;
+        left: unset;
+        right: 0;
+        z-index: 2;
+    }
+
+    & .zoomable-close{
+        @extend .zoomable-next;
+        top: 30px;
+        right: 30px;
+        width: 48px;
+        font-size: 32px;
+        z-index: 2;
+    }
+}
+
+.zoomable{
+    cursor: pointer;
+}

@@ -179,10 +179,9 @@ class MorphingAPP{
      * @param {*} pointSize Размер точки
      */
     initPoint = () => {
-
         let aspect = 32 / screen.pixelDepth;
-
         this.pointSize = this.initialPointSize * ( window.devicePixelRatio * aspect );
+        // this.pointSize = this.initialPointSize * 2 / window.devicePixelRatio;
     }
 
     // Инициализация рендерера
@@ -791,9 +790,11 @@ class MorphingAPP{
         this.isAnimating = true;
 
         for ( let i = 0; i < targetArray.length; i++ ){
-            this.tweenMorph( i, targetArray[ i ], influenceIndex, speed );
-        }
 
+            let isLast = i == targetArray.length - 1;
+
+            this.tweenMorph( i, targetArray[ i ], influenceIndex, speed, isLast );
+        }
 
     }
 
@@ -805,7 +806,7 @@ class MorphingAPP{
      * @param {*} visibleObjectIndex Индекс видимого объекта
      * @param {*} speed Скорость анимации
      */
-    tweenMorph = ( index, newVal, visibleObjectIndex, speed ) => {
+    tweenMorph = ( index, newVal, visibleObjectIndex, speed, morphDisolve = false ) => {
 
         if ( this.influenceArray.length == 0 ){
             this.influenceArray = new Int32Array( this.mesh.morphTargetInfluences.length );
@@ -815,36 +816,61 @@ class MorphingAPP{
             val: this.influenceArray[ index ]
         }
 
-        if( influenceObj.val == newVal ) return;
+        
+        if( !morphDisolve ){
+            
+            if( influenceObj.val == newVal ) return;
 
-        TweenMax.to( influenceObj, speed, {
-            ease: Power4.easeInOut,
-            val: newVal,
-            onUpdate: () => { 
-                this.mesh.morphTargetInfluences[ index ] = influenceObj.val
-                this.renderer.render( this.scene, this.activeCamera );
-            },
-            onComplete: () => {
-
-                this.activeMesh = this.morphObjects[ visibleObjectIndex + 1 ];
-                this.influenceArray[ index ] = newVal;
-
-                if ( visibleObjectIndex >= 0 ){
-                    this.mesh.visible = false;
-                    this.morphObjects[ visibleObjectIndex + 1 ].visible = true;
-                }else{
-                    this.mesh.material = this.morphMaterial;
+            TweenMax.to( influenceObj, speed, {
+                ease: Power4.easeInOut,
+                val: newVal,
+                onUpdate: () => { 
+                    this.mesh.morphTargetInfluences[ index ] = influenceObj.val
+                    this.renderer.render( this.scene, this.activeCamera );
+                },
+                onComplete: () => {
+    
+                    this.activeMesh = this.morphObjects[ visibleObjectIndex + 1 ];
+                    this.influenceArray[ index ] = newVal;
+    
+                    if ( visibleObjectIndex >= 0 ){
+                        this.mesh.visible = false;
+                        this.morphObjects[ visibleObjectIndex + 1 ].visible = true;
+                    }else{
+                        this.mesh.material = this.morphMaterial;
+                    }
+    
+                    for ( let i = 0; i < this.morphObjects.length; i++ ){
+                        this.morphObjects[ i ].morphTargetInfluences.fill( 0 );
+                    }
+    
+                    this.isAnimating = false;
+    
+                    this.triggerEvent('morphingComplete');
                 }
+            } )
+        }else{
 
-                for ( let i = 0; i < this.morphObjects.length; i++ ){
-                    this.morphObjects[ i ].morphTargetInfluences.fill( 0 );
+            TweenMax.to( influenceObj, speed / 2, {
+                ease: Power4.easeIn,
+                val: .2,
+                onUpdate: () => {
+                    this.mesh.morphTargetInfluences[ index ] = influenceObj.val
+                    this.renderer.render( this.scene, this.activeCamera );
+                },
+                onComplete: () => {
+                    TweenMax.to( influenceObj, speed / 2, {
+                        val: 0,
+                        ease: Power4.easeOut,
+                        onUpdate: () => {
+                            this.mesh.morphTargetInfluences[ index ] = influenceObj.val
+                            this.renderer.render( this.scene, this.activeCamera );
+                        }
+                    } )
                 }
+            } )
+        }
 
-                this.isAnimating = false;
-
-                this.triggerEvent('morphingComplete');
-            }
-        } )
     }
 
     // Растворение 3D объекта

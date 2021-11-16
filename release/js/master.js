@@ -1,8 +1,10 @@
 import MorphingAPP from './modules/MorphingApp.js';
+import Zoomable from './modules/zoomable.js';
 import * as THREE from './lib/three.module.js';
 $.fn.parallax=function(){return $(this).each(function(){$(this).css("background-position","center "+(($(this).offset().top+($(this).height()/2)-$(window).scrollTop())/$(window).height()*100)+"%")})};
 
 let MBox;
+let zoomable;
 
 let sTop;
 let wWidth;
@@ -15,22 +17,26 @@ let healingOT;
 let prosthesisOT;
 let labOT;
 
+let cameraPos;
+let mobileCameraPos = 20;
+let desktopCameraPos = 18.5;
+
 let storedStyle;
 
-let morphSpeed = .2;
+let morphSpeed = 1;
 
 let swiper;
 
 update();
 
 let commonParams = {
-    pointSize: .2,
+    pointSize: .18,
     pointColor: new THREE.Color(0, .9, 1),
     raycastThreshold: 3,
     raycastDistance: 2,
     disolveAmout: 7,
     transitionSpeed: 1.5,
-    maxAngle: 90,
+    maxAngle: 45,
     container: '.three-container'
 }
 
@@ -131,6 +137,8 @@ $(document).ready(() => {
         });
     }
 
+    zoomable = new Zoomable('.zoomable');
+
     if( $('#implants-swiper').length ){
 
         swiper = new Swiper( '#implants-swiper', {
@@ -189,11 +197,17 @@ function initPageMApp( data ){
     MApp = new MorphingAPP();
     window.MApp = MApp;
 
+    cameraPos = desktopCameraPos;
+
     let params = {...commonParams};
    
     MApp.init( params );
-    
-    MApp.actorCamera.position.z = 24
+
+    if( window.outerWidth <= 800 ){
+        cameraPos = mobileCameraPos
+    }
+    MApp.actorCamera.position.z = cameraPos;
+
     MApp.activeCamera = MApp.actorCamera;
     MApp.loadObjects( data );
 
@@ -220,14 +234,19 @@ function initEvents(){
     MApp.on( 'baseloading', labBaseLoading );
     MApp.on( 'morphloading', mainMorphLoading );
     MApp.on( 'loadingcomplete', () => {
+
+        if (scrollStep == 0){
+
+            if( $( 'main#main' ).length ){
+                MApp.morph( 'logo', 0 );
+                MApp.activeMeshName = 'logo';
+            }
+        }
         
-        if( $( 'main#main' ).length ){
-            MApp.morph( 'logo', 0 );
-            MApp.activeMeshName = 'logo';
-        } 
         
         updateScrollElements();
         correctScales();
+
         MApp.animate();
 
         $('#splash').addClass('loaded');
@@ -287,6 +306,8 @@ function update(){
     wWidth = window.innerWidth;
     wHeight = window.innerHeight;
     correctScales();
+
+    cameraPos = window.outerWidth <= 800 ? mobileCameraPos : desktopCameraPos;
     
     if( MApp !== undefined ){
         MApp.updateScene();
@@ -324,40 +345,52 @@ function updateMainElements(){
 
     if( MApp.isAnimating ) return;
 
+    if ( sTop >= wHeight / 20 && scrollStep == 0 ){
+        // Initial scroll is other then zero
+        switch(true){
+            case ( sTop >= implantOT && sTop <= healingOT ) : scrollStep = 2; break;
+            case ( sTop >= healingOT && sTop <= prosthesisOT ) : scrollStep = 3; break;
+            case ( sTop >= prosthesisOT && sTop <= labOT ): scrollStep = 4; break;
+            default: scrollStep = 1; break;
+        }
+        scrollStep -= 1;
+    }
+
+
     switch( true ){
         case ( sTop <= wHeight / 20 && scrollStep != 0 ):
             $('#cursor').removeClass('hidden').removeClass('small');
-            switchFigure( 'logo', 0, 0, 1, '.three-container' );
+            switchFigure( 'logo', 0, 0, 2, '.three-container' );
             scrollStep = 0;
             break;
         case ( ( sTop >= wHeight / 20 && sTop <= implantOT ) && scrollStep != 1 ):
             $('#cursor').addClass('hidden').addClass('small');
             if( scrollStep < 1 ){
-                switchFigure( 'implant', 1, 1, 1, '.canvas-wrapper' );
+                switchFigure( 'implant', 2, 0, 0, '.canvas-wrapper' );
             }else{
-                MApp.morph( 'implant', .5);
+                MApp.morph( 'implant', 1.6);
             }
             scrollStep = 1;
             break;
         case ( ( sTop >= implantOT && sTop <= healingOT ) && scrollStep != 2 ):
             $('#cursor').addClass('hidden').addClass('small');
             MApp.switchContainer( '.canvas-wrapper' );
-            MApp.activeCamera.position.z = 24;
-            MApp.morph( 'microscope', .5 );
+            MApp.activeCamera.position.z = cameraPos;
+            MApp.morph( 'microscope', 1.6);
             scrollStep = 2;
             break;
         case ( ( sTop >= healingOT && sTop <= prosthesisOT ) && scrollStep != 3 ):
             $('#cursor').addClass('hidden').addClass('small');
             MApp.switchContainer( '.canvas-wrapper' );
-            MApp.activeCamera.position.z = 24;
-            MApp.morph( 'scaner', .5 );
+            MApp.activeCamera.position.z = cameraPos;
+            MApp.morph( 'scaner', 1.6 );
             scrollStep = 3;
             break;
         case ( ( sTop >= prosthesisOT && sTop <= labOT ) && scrollStep != 4 ):
             $('#cursor').addClass('hidden').addClass('small');
             MApp.switchContainer( '.canvas-wrapper' );
-            MApp.activeCamera.position.z = 24;
-            MApp.morph( 'slepok', .5 );
+            MApp.activeCamera.position.z = cameraPos;
+            MApp.morph( 'slepok', 1.6 );
             scrollStep = 4;
             break;
     }
@@ -371,7 +404,7 @@ function switchFigure( name, dSpeed, mSpeed, aSpeed, container ){
         MApp.morph( name, mSpeed );
         MApp.disassemble(0);
         MApp.switchContainer( container, () => {
-            MApp.activeCamera.position.z = 24;
+            MApp.activeCamera.position.z = cameraPos;
         } );
         MApp.assemble( aSpeed );
     });

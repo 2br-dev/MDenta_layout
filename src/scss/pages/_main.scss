@@ -23,6 +23,10 @@
         background-position: center;
         background-size: contain;
         margin: 6vmin 0;
+
+        & .lazy{
+            width: 100%;
+        }
     }
 
     & .service-wrapper{
@@ -72,7 +76,11 @@
             min-height: 60vh;
             display: flex;
             align-items: center;
-            z-index: 2;
+            z-index: 4;
+
+            & .service-entry-content{
+                // background: rgba($paper, .4);
+            }
 
             @media(max-width: $medium){
                 margin: 160px 0;
