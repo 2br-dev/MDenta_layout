@@ -14,21 +14,14 @@ main#about{
     }
 
     .benefits{
-    
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
         
         & .benefit{
             
             border-radius: 8px;
-            width: calc(33% - 4px);
             padding: 1.5rem;
             display: flex;
             border: 1px solid $secondary;
-            margin: 4px;
+            margin-bottom: 1.25rem;
             background: rgba( $paper, .7 );
             
             & .icon{
