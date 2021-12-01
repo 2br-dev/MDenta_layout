@@ -6,8 +6,6 @@ import { ShaderPass } from '../lib/ShaderPass.js';
 import { EffectComposer } from '../lib/EffectComposer.js';
 import shaders from './shaders.js';
 
-window.THREE = THREE;
-
 class MorphingAPP{
 
     //#region Внутренние переменные
@@ -131,7 +129,7 @@ class MorphingAPP{
         // Инициализация 3D окружения
         this.init3JS( params.pointSize );
 
-        this.on( 'morphingComplete', () => {
+        this.on( 'morphingcomplete', () => {
             this.animate();
         } )
     }
@@ -285,6 +283,8 @@ class MorphingAPP{
     updateMouse = e => {
 
         this.triggerEvent( 'mousestart' );
+
+        // if( parseInt($('#cursor').css('opacity')) == 0 ) return;
 
         if ( window.outerWidth >= 600 ){
 
@@ -846,7 +846,7 @@ class MorphingAPP{
     
                     this.isAnimating = false;
     
-                    this.triggerEvent('morphingComplete');
+                    this.triggerEvent('morphingcomplete');
                 }
             } )
         }else{
@@ -952,8 +952,7 @@ class MorphingAPP{
                 this.activeMesh.material.size = pointSize;
 
                 this.renderer.render( this.scene, this.activeCamera );
-
-                console.log( pointSize );
+                
             },
             onComplete: () => {
                 this.dissolved = false;

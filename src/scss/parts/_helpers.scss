@@ -152,6 +152,7 @@ body{
     font-family: 'Prosto One';
     color: $dark;
     white-space: nowrap;
+    pointer-events: none;
 }
 
 .swiper-container{
@@ -366,6 +367,7 @@ canvas{
             left: 4px;
             width: 30%;
             height: 50%;
+            pointer-events: none;
 
             @media(max-width: $medium){
                 display: none;
@@ -428,7 +430,6 @@ canvas{
     border-radius: 3px;
 }
 
-
 @keyframes rotate{
     0%{
         transform: rotate(0);
@@ -436,4 +437,35 @@ canvas{
     100%{
         transform: rotate(360deg);
     }
+}
+
+input{
+    background: transparent;
+    line-height: 40px;
+    padding: 0 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid $secondary;
+    caret-color: $secondary;
+    color: #fff;
+    transition: box-shadow .2s;
+    cursor: text;
+    
+    &:focus{
+        outline: none;
+        box-shadow: 0 0 10px 4px rgba( $secondary, .4 );
+    }
+    
+    &::placeholder{
+        color: rgba( white, .3 );
+    }
+}
+
+textarea{
+    @extend input;
+    line-height: unset;
+    padding: 10px;
+    resize: vertical;
 }

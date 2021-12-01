@@ -1,0 +1,143 @@
+main#about{
+
+    .about-img{
+
+        padding-bottom: 75%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    & .row.flex{
+
+        align-items: center;
+        margin: 6vw 0;
+    }
+
+    .benefits{
+    
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        
+        & .benefit{
+            
+            border-radius: 8px;
+            width: calc(33% - 4px);
+            padding: 1.5rem;
+            display: flex;
+            border: 1px solid $secondary;
+            margin: 4px;
+            background: rgba( $paper, .7 );
+            
+            & .icon{
+    
+                width: 80px;
+                flex-shrink: 0;
+                margin-right: 1.5rem;
+                
+                & .lazy{
+                    height: 100%;
+                    transform: none;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity: 1;
+                }
+            }
+            
+            & .data{
+                
+                & h3{
+                    margin: 0;
+                    margin-bottom: 1.5rem;
+                }
+            }
+        }
+    }
+
+    & section#gallery{
+
+        & .swiper-container{
+
+            margin: 0;
+            margin-bottom: 1.5rem;
+            position: relative;
+
+            &:before, &:after{
+                display: none;
+            }
+
+            & .swiper-slide{
+
+                margin: 10px 0;
+
+                & .lazy{
+
+                    background-size: cover;
+                    background-position: center;
+
+                    @media(max-width: $medium){
+                        border-top-left-radius: 8px;
+                        border-bottom-right-radius: 8px;
+                    }
+                }
+            }
+
+            & .trigger-left{
+                display: block;
+                font-size: 3vmax;
+                position: absolute;
+                z-index: 20;
+                left: 0;
+                top: 50%;
+                transform: translateY( -50% );
+                background: $paper;
+
+                @media(max-width: $medium){
+                    font-size: 4.5vmax;
+                }
+            }
+
+            & .trigger-right{
+                @extend .trigger-left;
+                left: unset;
+                right: 0;
+            }
+
+            &#gallery-top{
+
+                & .swiper-slide{
+
+                    & .lazy{
+
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                    }
+                }
+            }
+
+            &#gallery-bottom{
+
+                & .swiper-slide{
+
+                    transition: opacity .2s;
+                    opacity: .7;
+
+                    & .lazy{
+                        transition: box-shadow .2s;
+                    }
+
+                    &.swiper-slide-active{
+
+                        opacity: 1;
+
+                        & .lazy{
+                            box-shadow: 0 0 0 5px $paper, 0 0 0 6px $secondary;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

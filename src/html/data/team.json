@@ -1,0 +1,82 @@
+[
+    {
+        "img": "/img/team/mylcev",
+        "collection": [
+            "/img/team/mylcev1",
+            "/img/team/mylcev2",
+            "/img/team/mylcev3",
+            "/img/team/mylcev4",
+            "/img/team/mylcev5"
+        ],
+        "lastName": "Мыльцев",
+        "name": "Евгений Владимирович",
+        "rank": "врач-стоматолог",
+        "galleryId": "gallery1"
+    },
+    {
+        "img": "/img/team/brus",
+        "collection": [
+            "/img/team/brus1",
+            "/img/team/brus2",
+            "/img/team/brus3",
+            "/img/team/brus4",
+            "/img/team/brus5",
+            "/img/team/brus6",
+            "/img/team/brus7"
+        ],
+        "lastName": "Брус",
+        "name": "Марк Игоревич",
+        "rank": "врач-стоматолог",
+        "galleryId": "gallery2"
+    },
+    {
+        "img": "/img/team/mylcev1",
+        "collection": [
+            "/img/team/mylcev1-1",
+            "/img/team/mylcev1-2",
+            "/img/team/mylcev1-3"
+        ],
+        "lastName": "Мыльцев",
+        "name": "Владимир Александрович",
+        "rank": "зубной техник",
+        "galleryId": "gallery3"
+    },
+    {
+        "img": "/img/team/nikolaeva",
+        "collection": [
+            "/img/team/nikolaeva1",
+            "/img/team/nikolaeva2"
+        ],
+        "lastName": "Николаева",
+        "name": "Виктория Юрьевна",
+        "rank": "врач-стоматолог",
+        "galleryId": "gallery4"
+    },
+    {
+        "img": "/img/team/mylceva",
+        "collection": [
+            "/img/team/mylceva1",
+            "/img/team/mylceva2",
+            "/img/team/mylceva3",
+            "/img/team/mylceva4",
+            "/img/team/mylceva5"
+        ],
+        "lastName": "Мыльцева",
+        "name": "Светлана Михайловна",
+        "rank": "медицинский регистратор",
+        "galleryId": "gallery5"
+    },
+    {
+        "img": "/img/team/sorokina",
+        "collection": [
+            "/img/sorokina1",
+            "/img/sorokina2",
+            "/img/sorokina3",
+            "/img/sorokina4"
+        ],
+        "lastName": "Сорокина",
+        "name": "Ирина Юрьевна",
+        "rank": "медицинский регистратор",
+        "galleryId": "gallery6"
+    }
+]

@@ -83,9 +83,14 @@ body{
                 transition: opacity .4s, transform .4s;
             }
 
-            &:hover:before{
-                opacity: 1;
-                transform: scale(1);
+            &:hover{
+
+                text-decoration: none !important;
+
+                &:before{
+                    opacity: 1;
+                    transform: scale(1);
+                }
             }
         }
     }

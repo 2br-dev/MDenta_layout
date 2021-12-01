@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @@include('./parts/head.html', {title:'О клинике'})
+</head>
+<body>
+    @@include('./parts/header.html')
+    @@include('./parts/splash.html')
+    <main id="about">
+        <section class="three">
+            <div class="three-container"></div>
+        </section>
+        <section class="hero">
+            <div class="container align-center-l-down">
+                <div class="background">
+                    <h1>О клинике</h1>
+                    <p>Работаем, чтобы помочь забыть о боли</p>
+                </div>
+            </div>
+        </section>
+        <section id="info">
+            <div class="container">
+                <div class="row">
+                    <div class="col s1 hide-s-down">
+                        <span class="section-id align-right">
+                            section 07: about
+                        </span>
+                    </div>
+                    <div class="col s11">
+                        <div class="row flex">
+                            <div class="col m6 s12">
+                                <div class="lazy about-img" data-src="/img/about/team.jpg"></div>
+                            </div>
+                            <div class="col l5 offset-l1 m6 s12">
+                                <h2>Команда</h2>
+                                <p>
+                                    Наша клиника – это сложившаяся династия, история которой 
+                                    насчитывает десятки лет. Все её представители прошли долгую дорогу, 
+                                    от начинающих интернов до опытных специалистов высочайшего класса. 
+                                    Специалисты нашей клиники – проверенные временем профессионалы, 
+                                    способные оперативно и с максимальным комфортом для пациентов 
+                                    решить поставленные перед ними задачи – от пломбирования до сложных операций 
+                                    по имплантации как отдельно недостающих зубов, так и их групп, 
+                                    вплоть до установки несъёмных челюстных протезов
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 center-align">
+                                <h2>Преимущества</h2>
+                            </div>
+                            <div class="benefits">
+                                @@loop('./parts/benefit.html', './data/benefits.json')
+                            </div>
+                        </div>
+                        <div class="row flex">
+                            <div class="col m6 s12">
+                                <div class="lazy about-img" data-src="/img/about/interior.jpg"></div>
+                            </div>
+                            <div class="col l5 offset-l1 m6 s12">
+                                <p>
+                                    К нашим преимуществам можно отнести прежде всего географическое расположение. 
+                                    Наша клиника находится в центре города. Это делает её удобной с точки зрения 
+                                    транспортной доступности. Кроме того, клиника обладает собственной парковкой, 
+                                    так что вам не придётся переживать, куда припарковать свой автомобиль.
+                                </p>
+                                <p>
+                                    Собственное производство позвоялет нам быть более независимыми от производителей 
+                                    зубных протезов, а это экономия нашего, но что важнее, вашего времени. Кроме того, 
+                                    благодаря опыту работы в этом направлении у нас получилось обеспечить отличное 
+                                    сопряжение изготовленных нашими силами коронок с имплантами от ведущих мировых 
+                                    производителей, обеспечивая максимальную оперативность изготовления и надёжность 
+                                    наших изделий.
+                                </p>
+                                <p>
+                                    Основной блок для многих людей – болевые ощущения во время операции и в постоперационный 
+                                    период. Современные средства анастезии в опытных руках наших врачей-анастезиологов помогут 
+                                    сделать процесс максимально безболезненным, а уютная атмосфера сделает ваше пребывание 
+                                    в клинике комфортным.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="gallery">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 center-align">
+                        <h2>Фотогалерея</h2>
+                    </div>
+                    <div class="col l8 offset-l2 m10 offset-m1 s12">
+                        <div class="swiper-container" id="gallery-top">
+                            <div class="swiper-wrapper">
+                                @@loop('./parts/about-gallery-slide.html', './data/gallery.json')
+                            </div>
+                            <a href="" class="trigger-left"><i class="mdi mdi-chevron-left"></i></a>
+                            <a href="" class="trigger-right"><i class="mdi mdi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col l8 offset-l2 m10 offset-m1 s12">
+                        <div class="swiper-container" id="gallery-bottom">
+                            <div class="swiper-wrapper">
+                                @@loop('./parts/about-gallery-slide.html', './data/gallery.json')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    @@include('./parts/scripts.html')
+    @@include('./parts/footer.html')
+</body>
+</html>

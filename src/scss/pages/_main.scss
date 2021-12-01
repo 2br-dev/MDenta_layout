@@ -34,6 +34,8 @@
         display: grid;
         grid-gap: 1.5rem;
         grid-template-columns: 42% 58%;
+        position: relative;
+        z-index: 2;
 
         @media(max-width: $extra-large){
             grid-template-columns: 50% 50%;
@@ -48,6 +50,10 @@
             height: 60vmin;
             position: relative;
             position: sticky;
+
+            @media(max-width: $medium){
+                z-index: -1;
+            }
 
             &:before{
                 display: block;
@@ -77,9 +83,11 @@
             display: flex;
             align-items: center;
             z-index: 4;
-
+            
             & .service-entry-content{
-                // background: rgba($paper, .4);
+                background: rgba($paper, .8);
+                position: relative;
+                z-index: 20;
             }
 
             @media(max-width: $medium){

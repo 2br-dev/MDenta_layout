@@ -2,24 +2,99 @@ class Zoomable{
 
     gallery = [];
     currentIndex = 0;
-
+    selector;
+    dragging = false;
+    oldMouse;
+    newMouse;
 
     constructor( selector ){
 
+        if( !window.zoomable ){
+            window.zoomable = [];
+        }
+
+        if( !$(selector).length ){
+            return false;
+        }
+
         document.querySelectorAll( selector ).forEach( image => {
-            
+            this.selector = selector;
             this.gallery.push( this.getSrc( image ) );
         } );
 
         this.prepeareDom();
+        this.setupEvents();
 
-        $('body').on( 'click', selector, this.openImage.bind( this ) );
+        window.zoomable.push( this );
+    }
+
+    setupEvents(){
+        $('body').on( 'click', this.selector, this.openImage.bind( this ) );
         $('body').on( 'click', '.zoomable-next', this.nextImage.bind( this ) );
         $('body').on( 'click', '.zoomable-prev', this.prevImage.bind( this ) );
         $('body').on( 'click', '.zoomable-close', this.closeImage.bind( this ) );
         $('body').on( 'click', '.zoom-container', this.closeImage.bind( this ) );
         $(window).on( 'scroll', this.closeImage.bind( this ) );
+        $('html, body').on('keyup', this.keyboardEvents.bind( this ));
 
+        $('body').on('mousedown', '.zoom-container' , this.startDrag.bind( this ));
+        $('body').on('mousemove', '.zoom-container' , this.moveDrag.bind( this ));
+        $('body').on('mouseup', '.zoom-container' , this.endDrag.bind( this ));
+
+        document.querySelector('.zoom-container').addEventListener( 'touchstart', this.startDrag.bind( this ), {passive: true} );
+        document.querySelector('.zoom-container').addEventListener( 'touchmove', this.moveDrag.bind( this ), {passive: true} );
+        document.querySelector('.zoom-container').addEventListener( 'touchend', this.endDrag.bind( this ), {passive: true} );
+    }
+
+    startDrag( e ){
+        if( e.type == 'mousedown' ){
+            e.preventDefault();
+            e.stopPropagation();
+            this.oldMouse = e.clientX;
+        }else{
+            this.oldMouse = e.touches[0].clientX;
+        }
+    }
+
+    moveDrag( e ){
+        this.dragging = true;
+    }
+
+    endDrag( e ){
+
+        if ( e.type == 'mouseup' ){
+            e.preventDefault();
+            e.stopPropagation();
+            this.newMouse = e.clientX;
+        }else{
+            this.newMouse = e.changedTouches[0].clientX;
+        }
+
+        let difference = Math.abs( this.oldMouse - this.newMouse );
+        if( difference < 10 ) return;
+
+
+        if ( this.dragging == true ){
+            
+            if( this.newMouse > this.oldMouse ){
+                // Drag right
+                this.nextImage();
+            }else{
+                // Drag left
+                this.prevImage();
+            }
+        }
+
+        this.dragging = false;
+        this.oldMouse = this.newMouse = null;
+    }
+
+    keyboardEvents( e ){
+        switch( e.keyCode ){
+            case 39: this.nextImage(); break;
+            case 37: this.prevImage(); break;
+            case 27: this.closeImage(); break;
+        }
     }
 
     getSrc( image ){
@@ -37,6 +112,8 @@ class Zoomable{
     }
 
     prepeareDom(){
+
+        if( $( '.zoom-container' ).length ) return;
 
         // Main view component
         let zoomContainer = document.createElement('div');
@@ -67,7 +144,7 @@ class Zoomable{
         zoomContainer.append( closeTrigger );
 
         // Image wrapper
-        let image = document.createElement( 'a' );
+        let image = document.createElement( 'img' );
         image.className = "zoomable-image";
         zoomContainer.append( image );
         
@@ -76,9 +153,10 @@ class Zoomable{
 
     openImage( e ){
         let img = this.getSrc( e.currentTarget );
-        $( '.zoomable-image' ).css({
-            backgroundImage: 'url(' + img + ")"
+        $( '.zoomable-image' ).attr({
+            src: img
         });
+        document.querySelector('.zoom-container').zoomableInstance = this;
         setTimeout(() => {
             $('.zoom-container').addClass( 'open' );
         }, 200);
@@ -88,50 +166,78 @@ class Zoomable{
 
     closeImage( e ){
 
-        if( e.type == 'click' ){
-
-            let path = e.originalEvent.path;
+        if ( e ) {
             
-            let links = path.filter( el => {
-                return el.tagName == "A"
-            } );
+            if( e.type == 'click' ){
     
-            if( !links.length )
-                return;
-    
-            if( !$(links[0]).hasClass('zoomable-close') )
-                return
+                let path = this.composedPath( e.target );
+                
+                let links = path.filter( el => {
+                    return el.tagName == "A" || el.tagName == "IMG"
+                } );
+        
+                if( links.length ){
+
+                    if( !$(links[0]).hasClass('zoomable-close') )
+                        return
+                }
+            }
         }
 
         $('.zoom-container').removeClass( 'open' );
     }
 
-    nextImage(){
+    nextImage( e ){
+
+        let instance = document.querySelector('.zoom-container').zoomableInstance;
         
-        let nextIndex = this.currentIndex + 1;
-        if( nextIndex >= this.gallery.length){
+        let nextIndex = instance.currentIndex + 1;
+        if( nextIndex >= instance.gallery.length){
             nextIndex = 0;
         }
 
-        $('.zoomable-image').css({
-            backgroundImage: "url(" + this.gallery[ nextIndex ] + ")"
+        $('.zoomable-image').attr({
+            src: instance.gallery[ nextIndex ]
         });
 
-        this.currentIndex = nextIndex;
+        instance.currentIndex = nextIndex;
     }
 
-    prevImage(){
+    prevImage( e ){
 
-        let prevIndex = this.currentIndex - 1;
+        let instance = document.querySelector('.zoom-container').zoomableInstance;
+
+
+        let prevIndex = instance.currentIndex - 1;
         if ( prevIndex < 0 ){
-            prevIndex = this.gallery.length - 1;
+            prevIndex = instance.gallery.length - 1;
         }
 
-        $('.zoomable-image').css({
-            backgroundImage: "url(" + this.gallery[ prevIndex ] + ")"
+        $('.zoomable-image').attr({
+            src: instance.gallery[ prevIndex ]
         })
 
-        this.currentIndex = prevIndex;
+        instance.currentIndex = prevIndex;
+    }
+
+    composedPath (el) {
+
+        var path = [];
+    
+        while (el) {
+    
+            path.push(el);
+    
+            if (el.tagName === 'HTML') {
+    
+                path.push(document);
+                path.push(window);
+    
+                return path;
+           }
+    
+           el = el.parentElement;
+        }
     }
 
 }

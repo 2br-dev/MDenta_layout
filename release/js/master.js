@@ -25,7 +25,7 @@ let storedStyle;
 
 let morphSpeed = 1;
 
-let swiper;
+let swiper, swiper2;
 
 update();
 
@@ -36,7 +36,7 @@ let commonParams = {
     raycastDistance: 2,
     disolveAmout: 7,
     transitionSpeed: 1.5,
-    maxAngle: 45,
+    maxAngle: 90,
     container: '.three-container'
 }
 
@@ -66,6 +66,20 @@ let prosthesis_data = {
 let implants_data = {
     baseObject: {
         name: 'implant',
+        title: ''
+    }
+}
+
+let team_data = {
+    baseObject: {
+        name: 'doctor',
+        title: ''
+    }
+}
+
+let about_data = {
+    baseObject: {
+        name: 'chair',
         title: ''
     }
 }
@@ -173,6 +187,81 @@ $(document).ready(() => {
         });
     }
 
+    if ( $('main#team').length ){
+
+        let members = document.querySelectorAll('.member-swiper');
+
+        let sourceDelay = 0;
+
+        members.forEach( member => {
+            
+            sourceDelay += 200;
+
+            setTimeout(() => {
+
+                let galleryId = member.dataset['gallery'];
+                let zoomable = new Zoomable('.' + galleryId);
+    
+                let memberSwiper = new Swiper( member, {
+                    pagination: {
+                        type: "bullets",
+                        el: ".member-pagination",
+                    },
+                    speed: 1000,
+                    autoplay: {
+                        delay: 5000,
+                    },
+                    loop: true,
+                } );
+                memberSwiper.on('slideChange', () => {
+                    $('.lazy').lazy();
+                });
+            }, sourceDelay);
+        } );
+    }
+
+    if ( $('main#contacts').length ){
+        initMap();
+    }
+
+    if ( $( 'main#about' ).length ){
+
+        swiper = new Swiper( document.querySelector( '#gallery-top' ), {
+            loop: true,
+            loopedSlides: 5,
+            spaceBetween: 2,
+            navigation: {
+                nextEl: '.trigger-right',
+                prevEl: '.trigger-left'
+            }
+        } );
+        swiper.on('slideChange', () => {
+            $( '.lazy' ).lazy({
+                afterLoad: ( el ) => {
+                    $( el ).addClass( 'complete' );
+                }
+            });
+        });
+
+        swiper2 = new Swiper( document.querySelector( '#gallery-bottom' ), {
+            slidesPerView: 5,
+            spaceBetween: 10,
+            loop: true,
+            slideToClickedSlide: true,
+            centeredSlides: true
+        } );
+        swiper2.on('slideChange', () => {
+            $( '.lazy' ).lazy({
+                afterLoad: ( el ) => {
+                    $( el ).addClass( 'complete' );
+                }
+            });
+        });
+
+        swiper.controller.control = swiper2;
+        swiper2.controller.control = swiper;
+        
+    }
     
     initFrameworks();
     initMApp();
@@ -189,6 +278,8 @@ function initMApp(){
         case "main": initPageMApp( main_data ); correctScales(); break;
         case "prosthesis": initPageMApp( prosthesis_data ); break;
         case "implants": initPageMApp( implants_data ); break;
+        case "team": initPageMApp( team_data ); break;
+        case "about": initPageMApp( about_data ); break;
         default: $('#splash').addClass('loaded'); break;
     }
 }
@@ -327,6 +418,8 @@ function updateScrollElements(){
         case "healing": updateLabElements(); break;
         case "prosthesis": updateLabElements(); break;
         case "implants": updateLabElements(); break;
+        case "team": updateLabElements(); break;
+        case "about": updateLabElements(); break;
     }
 }
 
@@ -435,6 +528,36 @@ function showCursor(){
 
 function hideCursor(){
     $('#cursor').addClass('hidden');
+}
+
+// Инициализация карты
+function initMap(){
+
+    loadScript( "https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js", () => {
+
+        let coords = [38.9963,45.0366];
+        let token = "pk.eyJ1IjoiZ2VuZXN5cyIsImEiOiJja2xyejVqbTAwN3c2MnBwdjZvdHVhOHpiIn0.IrmmbUMTtmXBxZjv8mcH8Q";
+
+        mapboxgl.accessToken = token;
+        let map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/genesys/ckwaddoxs3nyw15qnakq6fnnv',
+            center: coords,
+            zoom: 17,
+            pitch: 60,
+        });
+
+        const el = document.createElement( 'div' );
+        el.className = 'marker';
+
+        let marker = new mapboxgl.Marker( el )
+            .setLngLat(coords)
+            .addTo(map);
+
+        map.scrollZoom.disable()
+        map.addControl(new mapboxgl.NavigationControl());
+
+    } )
 }
 
 //Функция подключения

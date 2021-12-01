@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @@include('./parts/head.html', {title:'Протезирование'})
+</head>
+<body>
+    @@include('./parts/header.html')
+    @@include('./parts/splash.html')
+    <main id="team">
+        <section class="three">
+            <div class="three-container"></div>
+        </section>
+        <section class="hero">
+            <div class="container align-center-l-down">
+                <div class="background">
+                    <h1>Наша команда</h1>
+                    <p>Опытные профессионалы на страже вашего здоровья</p>
+                </div>
+            </div>
+        </section>
+        <section id="info">
+            <div class="container">
+                <div class="row">
+                    <div class="col s1 hide-s-down">
+                        <span class="section-id align-right">
+                            section 06: team
+                        </span>
+                    </div>
+                    <div class="col s11">
+                        <div class="row flex">
+                            @@loop('./parts/team-entry.html', './data/team.json')
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @@include('./parts/call-to-action.html')
+    </main>
+    @@include('./parts/scripts.html')
+    @@include('./parts/footer.html')
+</body>
+</html>
