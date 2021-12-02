@@ -928,6 +928,8 @@ class MorphingAPP{
      */
     assemble = ( speed, callback = () => {} ) => {
 
+        if ( !this.activeMesh ) return;
+
         let influenceIndex = this.activeMesh.morphTargetInfluences.length - 1;
         let anihilationInfluence = this.activeMesh.morphTargetInfluences[ influenceIndex ];
 

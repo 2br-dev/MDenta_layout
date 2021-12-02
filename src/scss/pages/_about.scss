@@ -118,14 +118,16 @@ main#about{
                     opacity: .7;
 
                     & .lazy{
-                        transition: box-shadow .2s;
+                        transition: box-shadow .2s, filter .2s;
+                        filter: blur(2px);
                     }
 
                     &.swiper-slide-active{
 
                         opacity: 1;
-
+                        
                         & .lazy{
+                            filter: none;
                             box-shadow: 0 0 0 5px $paper, 0 0 0 6px $secondary;
                         }
                     }

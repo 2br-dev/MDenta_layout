@@ -90,6 +90,10 @@
                 z-index: 20;
             }
 
+            & .button-wrapper{
+                margin-top: 60px;
+            }
+
             @media(max-width: $medium){
                 margin: 160px 0;
             }

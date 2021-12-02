@@ -38,16 +38,10 @@ header{
                     padding: 0 10px;
                     color: $primary;
                     transition: background .2s;
+                    white-space: nowrap;
                     
                     &:hover{
                         background: linear-gradient(darken(#fff, 2), darken(#fff, 20));
-                    }
-                }
-
-                &:last-of-type{
-
-                    & a{
-                        font-size: 26px;
                     }
                 }
 
@@ -82,6 +76,13 @@ header{
                     pointer-events: all;
                     opacity: 1;
                     transform: none;
+                }
+            }
+
+            &.burger-wrapper{
+
+                & a{
+                    font-size: 26px;
                 }
             }
         }

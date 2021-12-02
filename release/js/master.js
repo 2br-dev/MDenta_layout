@@ -115,7 +115,6 @@ let main_data = {
 
 $(document).ready(() => {
 
-
     if ( $( 'main#main' ).length ){
         implantOT = $('#s-implants').offset().top       - $('#s-implants').height() / 3;
         healingOT = $('#s-healing').offset().top        - $('#s-healing').height() / 3;
@@ -129,24 +128,24 @@ $(document).ready(() => {
             spaceBetween: 20,
             loop: true,
             navigation: {
-                    nextEl: '.next',
-                    prevEl: '.prev'
+                nextEl: '.next',
+                prevEl: '.prev'
             },
             pagination: {
-                    type: 'bullets',
-                    el: '.pagination-wrapper',
-                    clickable: true
+                type: 'bullets',
+                el: '.pagination-wrapper',
+                clickable: true
             },
             breakpoints: {
-                    600: {
-                        slidesPerView: 1
-                    },
-                    900: {
-                        slidesPerView: 2
-                    },
-                    1200: {
-                        slidesPerView: 3
-                    }
+                600: {
+                    slidesPerView: 1
+                },
+                900: {
+                    slidesPerView: 2
+                },
+                1200: {
+                    slidesPerView: 3
+                }
             }
         });
     }
@@ -165,6 +164,7 @@ $(document).ready(() => {
                 el: '.pagination-wrapper',
                 clickable: true
             },
+            spaceBetween: 2,
             autoHeight: true
         } );
 
@@ -236,11 +236,7 @@ $(document).ready(() => {
             }
         } );
         swiper.on('slideChange', () => {
-            $( '.lazy' ).lazy({
-                afterLoad: ( el ) => {
-                    $( el ).addClass( 'complete' );
-                }
-            });
+            updateLazy();
         });
 
         swiper2 = new Swiper( document.querySelector( '#gallery-bottom' ), {
@@ -251,15 +247,12 @@ $(document).ready(() => {
             centeredSlides: true
         } );
         swiper2.on('slideChange', () => {
-            $( '.lazy' ).lazy({
-                afterLoad: ( el ) => {
-                    $( el ).addClass( 'complete' );
-                }
-            });
+            updateLazy();
         });
 
         swiper.controller.control = swiper2;
         swiper2.controller.control = swiper;
+
         
     }
     
@@ -267,6 +260,16 @@ $(document).ready(() => {
     initMApp();
 
 });
+
+function updateLazy(){
+    setTimeout(() => {
+        $( '.lazy' ).lazy({
+            afterLoad: ( el ) => {
+                $( el ).addClass( 'complete' );
+            }
+        });
+    }, 80);
+}
 
 function initMApp(){
 
@@ -281,6 +284,10 @@ function initMApp(){
         case "team": initPageMApp( team_data ); break;
         case "about": initPageMApp( about_data ); break;
         default: $('#splash').addClass('loaded'); break;
+    }
+
+    if ( MApp ){
+        $('#cursor').removeClass('hidden');
     }
 }
 
@@ -325,6 +332,8 @@ function initEvents(){
     MApp.on( 'baseloading', labBaseLoading );
     MApp.on( 'morphloading', mainMorphLoading );
     MApp.on( 'loadingcomplete', () => {
+
+        $('html, body').scrollTop( 0 );
 
         if (scrollStep == 0){
 
