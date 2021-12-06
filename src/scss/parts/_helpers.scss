@@ -464,9 +464,164 @@ input{
     }
 }
 
+.input-field{
+
+    position: relative;
+    
+    & input, & textarea{
+        
+        position: relative;
+        z-index: 2;
+        
+        &::placeholder{
+            color: transparent;
+        }
+        
+        
+        & ~ label{
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            line-height: 40px;
+            padding: 0 10px;
+            color: rgba(white, .4);
+            z-index: 2;
+            border-top-left-radius: 10px;
+            background: $paper;
+            transition: color .2s, top .2s, left .2s, line-height .2s, font-size .2s;
+        }
+        
+        &:focus, &:not(:placeholder-shown){
+            
+            border-top-left-radius: 0;
+            
+            & ~ label{
+                font-size: 12px;
+                line-height: 10px;
+                padding-top: 5px;
+                top: -15px;
+                left: 0px;
+                color: #fff;
+                border: 1px solid $secondary;
+                border-bottom: 0;
+            }
+        }
+    }
+    
+}
+
+.list-field{
+    background: transparent;
+    line-height: 40px;
+    padding: 0 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid $secondary;
+    caret-color: $secondary;
+    color: #fff;
+    transition: box-shadow .2s;
+    position: relative;
+    cursor: pointer;
+    
+    & label{
+        position: absolute;
+        padding: 0 10px;
+        font-size: 12px;
+        line-height: 10px;
+        padding-top: 5px;
+        top: -16px;
+        left: -1px;
+        color: #fff;
+        border: 1px solid $secondary;
+        background: $paper;
+        border-bottom: 0;
+        border-top-left-radius: 10px;
+    }
+    
+    & ul{
+        border: 1px solid $secondary;
+        border-top: 0;
+        margin: 0;
+        position: absolute;
+        display: block;
+        width: calc(100% + 2px);
+        left: -1px;
+        background: $paper;
+        pointer-events: none;
+        top: 0;
+        opacity: 0;
+        transition: top .4s, opacity .4s;
+        z-index: 20;
+
+        @media(max-width: $small){
+            transform: translateY(-50%);
+        }
+        
+        & li{
+            padding: 0 10px;
+            line-height: 4px;
+            border-bottom: 1px solid transparent;
+            transition: line-height .2s, opacity .2s;
+        }
+        
+        &.expanded{
+            
+            opacity: 1;
+            top: calc(100% - 8px);
+            pointer-events: all;
+            
+            & li{
+
+                line-height: 30px;
+                cursor: pointer;
+
+                &:not(:last-of-type){
+
+                    border-bottom: 1px solid $primary;
+                }
+
+                &:hover{
+
+                    background: lighten($paper, 5);
+                }
+            }
+        }
+    }
+}
+
 textarea{
     @extend input;
     line-height: unset;
     padding: 10px;
     resize: vertical;
+}
+
+.modal{
+
+    background: $paper;
+    border: 1px solid $primary;
+    border-radius: 20px 0 20px 0;
+    overflow: visible;
+    min-height: fit-content;
+
+    & .modal-footer{
+        background: rgba(black, .5);
+        border-bottom-right-radius: 20px;
+    }
+
+    & .modal-content{
+
+        position: relative;
+
+        & .closer{
+
+            position: absolute;
+            width: fit-content !important;
+            margin: 0 !important;
+            top: 20px;
+            right: 20px;
+            font-size: 26px;
+        }
+    }
 }

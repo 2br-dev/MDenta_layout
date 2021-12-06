@@ -314,6 +314,8 @@ function initPageMApp( data ){
 
 function initFrameworks(){
 
+    M.Modal.init(document.querySelectorAll('.modal'));
+
     $('.lazy').lazy({
         afterLoad: ( el ) => {
             $( el ).addClass( 'complete' );
@@ -327,36 +329,91 @@ function initEvents(){
     $( window ).on( 'mousemove', MApp.updateMouse );
     $( window ).on( 'resize', update );
     $( window ).on( 'scroll', updateScrollElements );
+
     $( 'body' ).on( 'mouseenter', 'a', hideCursor );
     $( 'body' ).on( 'mouseleave', 'a', showCursor );
+    $( 'body' ).on( 'mousemove', 'canvas', showCursor );
+    $( 'body' ).on( 'mouseleave', 'canvas', hideCursor );
+    $( 'body' ).on( 'click', '.list-field', openList );
+    $( 'body' ).on( 'click', '.list-field li', selectItem );
+    $( 'body' ).on( 'click', closeList );
+
+    $( 'body' ).on( 'click', '.send-form', sendRequestOrder );
+
     MApp.on( 'baseloading', labBaseLoading );
     MApp.on( 'morphloading', mainMorphLoading );
-    MApp.on( 'loadingcomplete', () => {
+    MApp.on( 'loadingcomplete', loadingComplete );
+}
 
-        $('html, body').scrollTop( 0 );
+function sendRequestOrder( e ){
 
-        if (scrollStep == 0){
+    e.preventDefault();
 
-            if( $( 'main#main' ).length ){
-                MApp.morph( 'logo', 0 );
-                MApp.activeMeshName = 'logo';
+    let form = $( this ).parents( 'form' );
+    let data = form.serialize();
+    let modal = M.Modal.getInstance( form );
+
+    $.ajax({
+        url: "/assets/classes/sender.php",
+        data: data,
+        dataType: 'json',
+        type: 'POST',
+        success: response => {
+            M.toast({ html: response.message });
+            if ( response.code == 0 ){
+                modal.close();
+                resetForm( form );
             }
         }
-        
-        
-        updateScrollElements();
-        correctScales();
+    });
+}
 
-        MApp.animate();
+function resetForm( form){
+    $( form ).find( 'input[type="text"]' ).val('');
+    $( form ).find( 'textarea' ).val('');
+    $( form ).find( '.list-field input' ).val( '9:00' );
+    $( form ).find( '.list-field span' ).text( '9:00' );
+}
 
-        $('#splash').addClass('loaded');
-    } );
-    $( 'body' ).on( 'mousemove', 'canvas', () => {
-        $( '#cursor' ).removeClass( 'hidden' );
-    } );
-    $( 'body' ).on( 'mouseleave', 'canvas', () => {
-        $( '#cursor' ).addClass( 'hidden' );
-    } );
+function openList( e ){
+    $( this ).find( 'ul' ).addClass( 'expanded' );
+}
+
+function closeList( e ){
+
+}
+
+function selectItem( e ){
+    let newVal = $( this ).text();
+    let input = $( this ).parents( '.list-field' ).find( 'input' );
+    let span = $( this ).parents( '.list-field' ).find( 'span' );
+    let ul = $( this ).parent();
+
+    input.val( newVal );
+    span.text( newVal );
+
+    $(this.parentElement).removeClass('expanded');
+    e.stopPropagation();
+}
+
+function loadingComplete(){
+    $('html, body').scrollTop( 0 );
+
+    if (scrollStep == 0){
+
+        if( $( 'main#main' ).length ){
+            MApp.morph( 'logo', 0 );
+            MApp.activeMeshName = 'logo';
+        }
+    }
+    
+    
+    updateScrollElements();
+    correctScales();
+
+    MApp.animate();
+
+    $('#splash').addClass('loaded');
 }
 
 function correctScales(){
@@ -530,9 +587,7 @@ function updateLabElements(){
 }
 
 function showCursor(){
-    if( $('html, body').scrollTop() <= window.outerHeight / 6 ){
-        $('#cursor').removeClass('hidden');
-    }
+    $('#cursor').removeClass('hidden');
 }
 
 function hideCursor(){

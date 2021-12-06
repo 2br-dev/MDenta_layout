@@ -1,0 +1,8 @@
+PUT http://m-denta.local/assets/classes/sender.php
+content-type: application/json
+
+{
+    "formId": "request-order"
+}
+
+###
